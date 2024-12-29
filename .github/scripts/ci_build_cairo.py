@@ -19,6 +19,7 @@ import urllib.request
 from contextlib import contextmanager
 from pathlib import Path
 from sys import stdout
+from security import safe_command
 
 CAIRO_VERSION = "1.18.0"
 CAIRO_URL = f"https://cairographics.org/releases/cairo-{CAIRO_VERSION}.tar.xz"
@@ -60,7 +61,7 @@ def extract_tar_xz(path, directory):
 
 
 def run_command(command, cwd=None, env=None):
-    process = subprocess.Popen(command, cwd=cwd, env=env)
+    process = safe_command.run(subprocess.Popen, command, cwd=cwd, env=env)
     process.communicate()
     if process.returncode != 0:
         raise Exception("Command failed")

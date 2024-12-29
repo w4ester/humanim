@@ -6,6 +6,7 @@ from pathlib import Path
 from subprocess import run
 
 import av
+from security import safe_command
 
 __all__ = [
     "capture",
@@ -15,8 +16,7 @@ __all__ = [
 
 
 def capture(command, cwd=None, command_input=None):
-    p = run(
-        command,
+    p = safe_command.run(run, command,
         cwd=cwd,
         input=command_input,
         capture_output=True,

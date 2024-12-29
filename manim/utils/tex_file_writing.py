@@ -18,6 +18,7 @@ from pathlib import Path
 from manim.utils.tex import TexTemplate
 
 from .. import config, logger
+from security import safe_command
 
 __all__ = ["tex_to_svg_file"]
 
@@ -203,7 +204,7 @@ def compile_tex(tex_file: Path, tex_compiler: str, output_format: str) -> Path:
             tex_file,
             tex_dir,
         )
-        cp = subprocess.run(command, stdout=subprocess.DEVNULL)
+        cp = safe_command.run(subprocess.run, command, stdout=subprocess.DEVNULL)
         if cp.returncode != 0:
             log_file = tex_file.with_suffix(".log")
             print_all_tex_errors(log_file, tex_compiler, tex_file)
@@ -243,7 +244,7 @@ def convert_to_svg(dvi_file: Path, extension: str, page: int = 1):
             f"--output={result.as_posix()}",
             f"{dvi_file.as_posix()}",
         ]
-        subprocess.run(command, stdout=subprocess.DEVNULL)
+        safe_command.run(subprocess.run, command, stdout=subprocess.DEVNULL)
 
     # if the file does not exist now, this means conversion failed
     if not result.exists():
