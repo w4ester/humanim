@@ -44,9 +44,6 @@ Additionally your ``__init__`` must support this format as initialization value 
 from __future__ import annotations
 
 import colorsys
-
-# logger = _config.logger
-import random
 import re
 from collections.abc import Sequence
 from typing import Any, TypeVar, Union, overload
@@ -76,6 +73,7 @@ from manim.typing import (
 )
 
 from ...utils.space_ops import normalize
+import secrets
 
 # import manim._config as _config
 
@@ -1438,7 +1436,7 @@ def random_color() -> ManimColor:
     """
     import manim.utils.color.manim_colors as manim_colors
 
-    return random.choice(manim_colors._all_manim_colors)
+    return secrets.choice(manim_colors._all_manim_colors)
 
 
 def get_shaded_rgb(
