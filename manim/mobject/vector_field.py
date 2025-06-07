@@ -1,6 +1,7 @@
 """Mobjects representing vector fields."""
 
 from __future__ import annotations
+import secrets
 
 __all__ = [
     "VectorField",
@@ -9,7 +10,6 @@ __all__ = [
 ]
 
 import itertools as it
-import random
 from collections.abc import Iterable, Sequence
 from math import ceil, floor
 from typing import Callable
@@ -907,7 +907,7 @@ class StreamLines(VectorField):
         animations = [
             Create(line, run_time=run_time, **kwargs) for line in self.stream_lines
         ]
-        random.shuffle(animations)
+        secrets.SystemRandom().shuffle(animations)
         return AnimationGroup(*animations, lag_ratio=lag_ratio)
 
     def start_animation(
@@ -960,7 +960,7 @@ class StreamLines(VectorField):
                 **kwargs,
             )
             line.anim.begin()
-            line.time = random.random() * self.virtual_time
+            line.time = secrets.SystemRandom().random() * self.virtual_time
             if warm_up:
                 line.time *= -1
             self.add(line.anim.mobject)

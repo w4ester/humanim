@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from manim.utils.parameter_parsing import flatten_iterable_parameters
+import secrets
 
 __all__ = ["Scene"]
 
@@ -10,7 +11,6 @@ import copy
 import datetime
 import inspect
 import platform
-import random
 import threading
 import time
 import types
@@ -151,7 +151,7 @@ class Scene:
         # TODO, remove need for foreground mobjects
         self.foreground_mobjects = []
         if self.random_seed is not None:
-            random.seed(self.random_seed)
+            secrets.SystemRandom().seed(self.random_seed)
             np.random.seed(self.random_seed)
 
     @property

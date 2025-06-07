@@ -1,6 +1,7 @@
 """Base classes for objects that can be displayed."""
 
 from __future__ import annotations
+import secrets
 
 __all__ = ["Mobject", "Group", "override_animate"]
 
@@ -10,7 +11,6 @@ import inspect
 import itertools as it
 import math
 import operator as op
-import random
 import sys
 import types
 import warnings
@@ -2593,7 +2593,7 @@ class Mobject:
         if recursive:
             for submob in self.submobjects:
                 submob.shuffle(recursive=True)
-        random.shuffle(self.submobjects)
+        secrets.SystemRandom().shuffle(self.submobjects)
 
     def invert(self, recursive: bool = False) -> None:
         """Inverts the list of :attr:`submobjects`.

@@ -3,7 +3,6 @@ from __future__ import annotations
 import copy
 import inspect
 import itertools as it
-import random
 import sys
 import types
 from collections.abc import Iterable, Iterator, Sequence
@@ -45,6 +44,7 @@ from manim.utils.space_ops import (
     normalize,
     rotation_matrix_transpose,
 )
+import secrets
 
 if TYPE_CHECKING:
     import numpy.typing as npt
@@ -1320,7 +1320,7 @@ class OpenGLMobject:
         if recurse:
             for submob in self.submobjects:
                 submob.shuffle(recurse=True)
-        random.shuffle(self.submobjects)
+        secrets.SystemRandom().shuffle(self.submobjects)
         self.assemble_family()
         return self
 
