@@ -20,6 +20,7 @@ from ..geometry.line import Line
 from ..geometry.polygram import Polygon, Rectangle, RoundedRectangle
 from ..opengl.opengl_compatibility import ConvertToOpenGL
 from ..types.vectorized_mobject import VMobject
+import defusedxml.ElementTree
 
 __all__ = ["SVGMobject", "VMobjectFromSVGPath"]
 
@@ -190,7 +191,7 @@ class SVGMobject(VMobject, metaclass=ConvertToOpenGL):
     def generate_mobject(self) -> None:
         """Parse the SVG and translate its elements to submobjects."""
         file_path = self.get_file_path()
-        element_tree = ET.parse(file_path)
+        element_tree = defusedxml.ElementTree.parse(file_path)
         new_tree = self.modify_xml_tree(element_tree)
         # Create a temporary svg file to dump modified svg to be parsed
         modified_file_path = file_path.with_name(f"{file_path.stem}_{file_path.suffix}")
